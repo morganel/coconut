@@ -35,23 +35,22 @@ class SeatsController < ApplicationController
   # POST /seats.json
   def create
     @seat = Seat.new(seat_params)
+    @success = 1
     puts("SEAT CREATED")
-    @seat.save
-    respond_to do |format|
-      format.js
-    end
-        #@seat.save
-        #puts(@seat.flight.seats)   
-        #render :partial=>'flights/index_seat', :locals=>{:seats=>@seat.flight.seats}
-        #$('#render_partial_form').html("<%= escape_javascript (render :partial=>'flights/index_seat', :locals=>{:seats=>@seat.flight.seats}) %>");
-        #format.html { redirect_to @seat, notice: 'Seat was successfully created.' }
-        #format.json { render :show, status: :created, location: @seat }
-        #puts("HERE");
-    
-        #format.html { render :new }
-        #format.json { render json: @seat.errors, status: :unprocessable_entity }
-   
-   # end
+      respond_to do |format|
+        if @seat.save
+          format.js {flash[:notice] = "success"} 
+          format.html { redirect_to @seat, notice: 'Seat was successfully created.' }
+          format.json { render :show, status: :created, location: @seat }
+          puts("HERE");
+        else
+          @success = 0;
+          puts("HERE 2");
+          format.js
+          format.html { render :new }
+          format.json { render json: @seat.errors, status: :unprocessable_entity }
+        end
+      end
   end
 
   # PATCH/PUT /seats/1
