@@ -1,0 +1,3 @@
+$('#render_partial_form').html("<%= escape_javascript (render :partial=>'flights/index_seat', :locals=>{:seats=>@seat.flight.seats}) %>");
+$("#seat_baggage").val("");
+$('#seat_name').val("");

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<%= javascript_include_tag 'application' %>
+<script>
+  $(document).ready(function(){console.log("blabla")})
+
+  $(document).ready(function(){
+    setInterval(updateSeats,3000000);
+ });
+
+  function updateSeats(){
+    
+    $.ajax({
+    url:  "/flights/<%= @flight.id %>/seats",
+    type: "GET",
+  }).done(function(data){
+    console.log("doneHAHAHA");
+  });
+  } 
+ 
+  
+</script>
+
+</head>
+<body> 
+  <%= yield %>
+</body>
+</html>
